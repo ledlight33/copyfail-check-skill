@@ -1,0 +1,11 @@
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local output
+*.log
+*.tmp
+out.json

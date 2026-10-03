@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Unit tests
+        run: bash tests/run_tests.sh
+
+      - name: Smoke test (JSON output is valid)
+        run: |
+          # The script can exit non-zero by design (exposed host, weak signals),
+          # so capture the JSON first and validate it separately.
+          bash copyfail-check/scripts/copyfail_check.sh --no-scan --json > "$RUNNER_TEMP/out.json" || true
+          python3 - "$RUNNER_TEMP/out.json" <<'PY'
+          import json, sys
+          data = json.load(open(sys.argv[1]))
+          keys = {"tool", "version", "timestamp", "host", "exposure", "integrity", "traces", "verdict"}
+          missing = keys - set(data)
+          assert not missing, "missing keys: %s" % sorted(missing)
+          print("verdict:", data["verdict"]["status"])
+          PY
+
+      - name: ShellCheck (informational)
+        continue-on-error: true
+        run: shellcheck copyfail-check/scripts/copyfail_check.sh tests/run_tests.sh
