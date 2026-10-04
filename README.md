@@ -4,6 +4,8 @@
 
 A portable Agent Skill and standalone script that let any AI agent, or you, check a Linux host for Copy Fail (CVE-2026-31431) using read-only commands. It tells you whether the kernel is in the affected range, whether the vulnerable `algif_aead` path is reachable or blocked, whether any privileged file looks different in the page cache than on disk, and whether the usual weak traces are present. It never runs, fetches or contains exploit code, and it never changes the system.
 
+> **New to Copy Fail forensics?** There is a free interactive walkthrough for humans that explains the investigation step by step and includes the same read-only checklist: [ledlight33.github.io/copyfail-dfir](https://ledlight33.github.io/copyfail-dfir/) (Greek version: [?lang=el](https://ledlight33.github.io/copyfail-dfir/?lang=el)). It is a separate project, and this skill links to it only as further reading.
+
 Copy Fail (CVE-2026-31431, CVSS 7.8) is a Linux kernel bug in `algif_aead` / `authencesn` that lets a local unprivileged user write into the page cache of a file they can only read. It affects kernels from 4.14 until patched and has been on the CISA KEV list since 2026-05-01. Early exploitation was limited and mostly PoC testing (Microsoft). CrowdStrike (2026-08-03) reported finding Belarus-nexus activity just over 20 hours after public disclosure. No ransomware or botnet use and no patch bypass have been reported in the sources reviewed for this project (as of 2026-10-03).
 
 ## What it does
