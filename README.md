@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/ledlight33/copyfail-check-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/ledlight33/copyfail-check-skill/actions/workflows/ci.yml)
 
-An Agent Skill that lets an AI agent check a Linux host for Copy Fail (CVE-2026-31431) using read-only commands. It tells you whether the kernel is in the affected range, whether the vulnerable `algif_aead` path is reachable or blocked, whether any privileged file looks different in the page cache than on disk, and whether the usual weak traces are present. It never runs, fetches or contains exploit code, and it never changes the system.
+A portable Agent Skill and standalone script that let any AI agent, or you, check a Linux host for Copy Fail (CVE-2026-31431) using read-only commands. It tells you whether the kernel is in the affected range, whether the vulnerable `algif_aead` path is reachable or blocked, whether any privileged file looks different in the page cache than on disk, and whether the usual weak traces are present. It never runs, fetches or contains exploit code, and it never changes the system.
 
 Copy Fail (CVE-2026-31431, CVSS 7.8) is a Linux kernel bug in `algif_aead` / `authencesn` that lets a local unprivileged user write into the page cache of a file they can only read. It affects kernels from 4.14 until patched and has been on the CISA KEV list since 2026-05-01. Early exploitation was limited and mostly PoC testing (Microsoft). CrowdStrike (2026-08-03) reported finding Belarus-nexus activity just over 20 hours after public disclosure. No ransomware or botnet use and no patch bypass have been reported in the sources reviewed for this project (as of 2026-10-03).
 
@@ -25,17 +25,20 @@ Copy Fail (CVE-2026-31431, CVSS 7.8) is a Linux kernel bug in `algif_aead` / `au
 
 ## Install
 
-Claude Code:
+This is meant to work with any agent. The skill is one folder, `copyfail-check/`, with plain-markdown instructions (`SKILL.md`) and a bash script. It only needs a Linux shell with bash. Get it first:
 
 ```sh
 git clone https://github.com/ledlight33/copyfail-check-skill.git
-# for all your projects
-mkdir -p ~/.claude/skills && cp -r copyfail-check-skill/copyfail-check ~/.claude/skills/
-# or for one project, from the project root
-mkdir -p .claude/skills && cp -r /path/to/copyfail-check-skill/copyfail-check .claude/skills/
 ```
 
-Other agents: point the agent at `copyfail-check/SKILL.md` and tell it to follow those instructions. The skill only needs a Linux shell with bash.
+Then pick the row that matches your setup:
+
+| Your setup | What to do |
+| --- | --- |
+| An agent that supports Agent Skills (a skills directory of folders with a `SKILL.md`) | Copy the `copyfail-check` folder into that agent's skills directory. Example for Claude Code: `mkdir -p ~/.claude/skills && cp -r copyfail-check-skill/copyfail-check ~/.claude/skills/` (all projects) or the same into `.claude/skills/` inside a project |
+| Any other agent that can read files and run shell commands | Keep the folder anywhere the agent can read and tell it: "Follow copyfail-check/SKILL.md". You can also add that line to your agent's project instructions file. This repository ships an `AGENTS.md` that does it when an agent works inside the repository |
+| An agent without shell access | Run the script yourself and give the agent the JSON output. It interprets it with `copyfail-check/references/interpretation.md`. You can also paste `SKILL.md` into the agent's custom instructions |
+| No agent at all | Run `bash copyfail-check/scripts/copyfail_check.sh` yourself, or from cron, CI or a SIEM, and act on the exit code |
 
 ## Use
 

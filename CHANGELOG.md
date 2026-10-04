@@ -17,4 +17,5 @@ Initial release.
 - Weak traces: kernel log PF_ALG timing, shell history that mentions copy.fail, and auditd socket events (root only).
 - Verdicts `NOT_EXPOSED`, `EXPOSED_NO_INDICATORS`, `EXPOSED_INCONCLUSIVE` and `SUSPECT`, with exit codes 0, 1, 2 and 64.
 - Unit tests (`tests/run_tests.sh`, 107 tests) and a GitHub Actions workflow with the unit tests, a JSON smoke test that checks the top-level keys and a non-blocking ShellCheck step.
+- Agent-neutral install instructions for any agent, a standalone no-agent mode, and an `AGENTS.md` that points agents working in the repository to the skill.
 - README, SECURITY policy and MIT license.
