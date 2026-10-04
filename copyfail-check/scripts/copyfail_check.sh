@@ -164,7 +164,8 @@ Options:
 Exit codes: 0 not exposed, 1 exposed / unknown / weak signals, 2 suspect (confirmed mismatch),
             64 usage error.
 Run as root for full coverage (kernel log, audit log, other users' shell history).
-The script never modifies the system.
+The script is designed to be read-only. Read it before you run it and use it at your own
+risk (see the disclaimer in the README).
 EOF
 }
 

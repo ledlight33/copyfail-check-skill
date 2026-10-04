@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## v1.0.3 - 2026-10-04 (wording only, behavior unchanged)
+
+### Changed
+
+- The `--help` text of `copyfail_check.sh` no longer says "The script never modifies the system". It now says the script is designed to be read-only, to read it first, and to use it at your own risk, in line with the README disclaimer.
+
 ## v1.0.2 - 2026-10-04 (documentation only, the script is unchanged)
 
 ### Added
