@@ -2,11 +2,23 @@
 
 [![CI](https://github.com/ledlight33/copyfail-check-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/ledlight33/copyfail-check-skill/actions/workflows/ci.yml)
 
-A portable Agent Skill and standalone script that let any AI agent, or you, check a Linux host for Copy Fail (CVE-2026-31431) using read-only commands. It tells you whether the kernel is in the affected range, whether the vulnerable `algif_aead` path is reachable or blocked, whether any privileged file looks different in the page cache than on disk, and whether the usual weak traces are present. It never runs, fetches or contains exploit code, and it never changes the system.
+A portable Agent Skill and standalone script that let any AI agent, or you, check a Linux host for Copy Fail (CVE-2026-31431) using read-only commands. It tells you whether the kernel is in the affected range, whether the vulnerable `algif_aead` path is reachable or blocked, whether any privileged file looks different in the page cache than on disk, and whether the usual weak traces are present. It never runs, fetches or contains exploit code, and it is designed to be read-only (read the disclaimer below before you run it).
 
 > **New to Copy Fail forensics?** There is a free interactive walkthrough for humans that explains the investigation step by step and includes the same read-only checklist: [ledlight33.github.io/copyfail-dfir](https://ledlight33.github.io/copyfail-dfir/) (Greek version: [?lang=el](https://ledlight33.github.io/copyfail-dfir/?lang=el)). It is a separate project, and this skill links to it only as further reading.
 
 Copy Fail (CVE-2026-31431, CVSS 7.8) is a Linux kernel bug in `algif_aead` / `authencesn` that lets a local unprivileged user write into the page cache of a file they can only read. It affects kernels from 4.14 until patched and has been on the CISA KEV list since 2026-05-01. Early exploitation was limited and mostly PoC testing (Microsoft). CrowdStrike (2026-08-03) reported finding Belarus-nexus activity just over 20 hours after public disclosure. No ransomware or botnet use and no patch bypass have been reported in the sources reviewed for this project (as of 2026-10-03).
+
+## Disclaimer: check first, then run
+
+This project was created and tested in the author's own environment (Ubuntu under WSL2, plus unit tests with mocked reads). Linux systems, kernels, filesystems and AI agents differ, so it may behave differently on yours.
+
+- **Do not take "read-only" on trust.** The script is designed to be read-only, but you should read `copyfail-check/scripts/copyfail_check.sh` and `copyfail-check/SKILL.md` before you run them. Run the script yourself once before you let an agent run it.
+- **Test first.** Try it on a test machine, not on a production system.
+- **An AI agent can misread instructions or make mistakes.** Keep it supervised, require your approval for every action that changes anything, and do not give it more access than you are comfortable with. The skill tells the agent to behave safely, but no instructions can force an agent to follow them.
+- **Read-only operations still have side effects.** They use CPU and disk I/O (the scan can take minutes on a large filesystem), can update file access times, and a direct read first writes already-modified cached pages back to disk, which is normal operating system behavior.
+- **The result is a signal, not a verdict.** A clean result is not proof that a machine is safe, and a mismatch is not proof of a compromise. Do not use this as your only security control.
+
+The author is not responsible or liable for any damage, data loss, downtime or other harm caused by running this script, by an AI agent that uses this skill, or by acting on its output. You use it entirely at your own risk. This matches the MIT license, under which the software is provided "as is", without warranty of any kind.
 
 ## What it does
 
@@ -20,7 +32,7 @@ Copy Fail (CVE-2026-31431, CVSS 7.8) is a Linux kernel bug in `algif_aead` / `au
 ## What it does NOT do
 
 - It does not contain, download or run any exploit. It never tries to trigger the bug.
-- It is read-only. It never writes files, never uses sudo, never loads or unloads modules and never drops caches.
+- It is read-only by design (see the disclaimer above). The code never writes files, never uses sudo, never loads or unloads modules and never drops caches.
 - A clean result is a good sign, not proof. The poisoned page can be evicted from the cache, or lost on reboot, and the file on disk was never changed.
 - It cannot confirm a compromise by itself. It detects a cached-versus-disk difference, which can come from Copy Fail or from a related page-cache bug (Dirty Frag, Fragnesia, DirtyClone). Confirming what happened needs memory forensics.
 - It does not patch or harden anything. Patch the kernel.

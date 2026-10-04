@@ -2,6 +2,17 @@
 
 All notable changes to this project are documented in this file.
 
+## v1.0.1 - 2026-10-04 (documentation only, the script is unchanged)
+
+### Added
+
+- A "Disclaimer: check first, then run" section in the README: tested only in the author's environment, read the script before running it, test on a non-production machine first, supervise AI agents, side effects of read-only operations, no liability.
+- The skill and `AGENTS.md` now tell an agent to explain what the script reads and wait for a clear go before the first run on a host.
+
+### Changed
+
+- Wording now says the script is "designed to be read-only" instead of promising it never changes anything.
+
 ## v1.0.0 - 2026-10-03
 
 Initial release.

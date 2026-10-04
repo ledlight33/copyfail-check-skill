@@ -2,7 +2,7 @@
 
 ## Scope
 
-This project is a defensive checker. It helps an AI agent or a human find out whether a Linux host is exposed to Copy Fail (CVE-2026-31431) and whether privileged files look different in the page cache than on disk. It uses read-only commands and never changes the system.
+This project is a defensive checker. It helps an AI agent or a human find out whether a Linux host is exposed to Copy Fail (CVE-2026-31431) and whether privileged files look different in the page cache than on disk. It uses read-only commands and is designed not to change the system (see the disclaimer in the README).
 
 ## No exploit code
 

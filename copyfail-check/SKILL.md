@@ -1,6 +1,6 @@
 ---
 name: copyfail-check
-description: Runs a read-only check of a Linux host for Copy Fail (CVE-2026-31431), a kernel page-cache privilege escalation, and interprets the verdict. Use when asked about Copy Fail, CVE-2026-31431, algif_aead, or whether a Linux machine is vulnerable or compromised. Never runs, fetches or writes exploit code and never changes the host.
+description: Runs a read-only check of a Linux host for Copy Fail (CVE-2026-31431), a kernel page-cache privilege escalation, and interprets the verdict. Use when asked about Copy Fail, CVE-2026-31431, algif_aead, or whether a Linux machine is vulnerable or compromised. Read-only by design. Never runs, fetches or writes exploit code.
 ---
 
 # Copy Fail check
@@ -30,6 +30,7 @@ NEVER:
 - Say a host is safe, clean or not compromised. Say "no indicators found right now".
 
 ALWAYS:
+- Before the first run on a host, tell the user in plain words what the script reads (kernel and config files, setuid files, package manager and log data), that it can take minutes on a large filesystem, and that the project is used at the user's own risk (see the README disclaimer). Offer to show the script first, then wait for a clear go. Check the host and account with the user before you run anything.
 - Present every remediation or forensic command as a suggestion and wait for a clear yes before running it.
 - State that a clean result is a good sign, not proof: the poisoned page can be evicted, or lost on reboot.
 - Treat SUSPECT as a likely compromise of the whole host, not only of one file.
