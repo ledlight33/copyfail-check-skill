@@ -8,7 +8,7 @@ A portable Agent Skill and standalone script that let any AI agent, or you, chec
 
 Copy Fail (CVE-2026-31431, CVSS 7.8) is a Linux kernel bug in `algif_aead` / `authencesn` that lets a local unprivileged user write into the page cache of a file they can only read. It affects kernels from 4.14 until patched and has been on the CISA KEV list since 2026-05-01. Early exploitation was limited and mostly PoC testing (Microsoft). CrowdStrike (2026-08-03) reported finding Belarus-nexus activity just over 20 hours after public disclosure. No ransomware or botnet use and no patch bypass have been reported in the sources reviewed for this project (as of 2026-10-03).
 
-## Disclaimer: check first, then run
+## ⚠️Disclaimer: check first, then run⚠️
 
 This project was created and tested in the author's own environment (Ubuntu under WSL2, plus unit tests with mocked reads). Linux systems, kernels, filesystems and AI agents differ, so it may behave differently on yours.
 
