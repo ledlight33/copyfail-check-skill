@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## v1.0.2 - 2026-10-04 (documentation only, the script is unchanged)
+
+### Added
+
+- A "Tested on" section in the README: what has been tested (Ubuntu 24.04 under WSL2, Ubuntu on GitHub Actions), what is expected to work but is not yet tested (other distributions), what the script needs, and a request to report results from other distributions.
+
 ## v1.0.1 - 2026-10-04 (documentation only, the script is unchanged)
 
 ### Added

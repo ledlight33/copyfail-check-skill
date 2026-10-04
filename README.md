@@ -37,6 +37,22 @@ The author is not responsible or liable for any damage, data loss, downtime or o
 - It cannot confirm a compromise by itself. It detects a cached-versus-disk difference, which can come from Copy Fail or from a related page-cache bug (Dirty Frag, Fragnesia, DirtyClone). Confirming what happened needs memory forensics.
 - It does not patch or harden anything. Patch the kernel.
 
+## Tested on
+
+| Environment | Status |
+| --- | --- |
+| Ubuntu 24.04 under WSL2 (kernel 6.6.87.2) | Full runs (text, JSON and `--no-scan`) and all unit tests |
+| Ubuntu on GitHub Actions (`ubuntu-latest`) | Unit tests and a JSON smoke test on every push |
+| Other distributions (Kali, Debian, Fedora, the RHEL family, Arch, Alpine and more) | Expected to work, **not yet tested** |
+| Non-Linux systems (macOS, Windows without WSL) | Not applicable, the script exits with code 64 |
+
+Things to know on other distributions:
+
+- The script needs real bash (not `sh` or `dash`) and the standard tools it uses: `find`, `dd`, `sha256sum`, `grep`, `sed`, `awk` and `readlink`. `dpkg` or `rpm`, `dmesg` or `journalctl`, and `ausearch` are optional and only add detail.
+- Only Ubuntu has a built-in table of fixed kernel builds. On other distributions the kernel result is usually `check_vendor`, because the script cannot know which fixes a vendor has backported. Check your vendor's security tracker for that part. The configuration, module and file comparison checks do not depend on the distribution.
+
+If you run it on another distribution, please open an issue with the distribution, the kernel version and the verdict, whether it worked or not. That helps this table grow.
+
 ## Install
 
 This is meant to work with any agent. The skill is one folder, `copyfail-check/`, with plain-markdown instructions (`SKILL.md`) and a bash script. It only needs a Linux shell with bash. Get it first:
